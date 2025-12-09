@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  duetracker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    container_name: duetracker-web
+    networks:
+      - duetracker-network
+
+networks:
+  duetracker-network:
+    driver: bridge

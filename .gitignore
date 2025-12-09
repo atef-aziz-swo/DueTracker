@@ -54,3 +54,12 @@ ios/fastlane/test_output
 
 # Testing
 /coverage
+
+# Web build
+dist/
+.vite/
+
+# Environment
+.env
+.env.local
+.env.production
