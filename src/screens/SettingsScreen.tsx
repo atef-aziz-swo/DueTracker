@@ -6,13 +6,15 @@ import {
   ScrollView,
   Alert,
   Switch,
+  Platform,
 } from 'react-native';
 import {colors, spacing, typography, shadows} from '../utils/theme';
 import {Button} from '../components/Button';
 import {loadSettings, saveSettings, clearAllData} from '../services/storage';
+import {exportData, downloadJSON, importData} from '../utils/exportImport';
 import {AppSettings} from '../types';
 
-export const SettingsScreen = () => {
+export const SettingsScreen = ({navigation}: any) => {
   const [settings, setSettings] = useState<AppSettings | null>(null);
 
   useEffect(() => {
@@ -57,6 +59,59 @@ export const SettingsScreen = () => {
         },
       ]
     );
+  };
+
+  const handleExportData = async () => {
+    try {
+      const jsonData = await exportData();
+      
+      if (Platform.OS === 'web') {
+        downloadJSON(jsonData);
+        Alert.alert('Success', 'Data exported successfully');
+      } else {
+        // For mobile, you could use Share API or file system
+        Alert.alert('Export Data', jsonData, [
+          {text: 'OK'},
+        ]);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to export data');
+    }
+  };
+
+  const handleImportData = () => {
+    if (Platform.OS === 'web') {
+      // Create file input for web
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = async (e: any) => {
+        const file = e.target?.files?.[0];
+        if (file) {
+          try {
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+              try {
+                const jsonString = event.target?.result as string;
+                await importData(jsonString);
+                Alert.alert('Success', 'Data imported successfully. Please refresh the app.');
+                loadData();
+              } catch (error) {
+                Alert.alert('Error', 'Failed to import data. Please check the file format.');
+              }
+            };
+            reader.readAsText(file);
+          } catch (error) {
+            Alert.alert('Error', 'Failed to read file');
+          }
+        }
+      };
+      input.click();
+    } else {
+      Alert.alert('Import Data', 'Please paste your backup JSON data', [
+        {text: 'Cancel', style: 'cancel'},
+      ]);
+    }
   };
 
   if (!settings) {
@@ -146,15 +201,48 @@ export const SettingsScreen = () => {
         </View>
 
         <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Categories</Text>
+          
+          <Button
+            title="Manage Categories"
+            onPress={() => navigation.navigate('Categories')}
+            icon="folder-edit"
+            variant="secondary"
+          />
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Data Management</Text>
+          
+          <Button
+            title="Export Data"
+            onPress={handleExportData}
+            icon="download"
+            variant="secondary"
+            style={{marginBottom: spacing.md}}
+          />
+          
+          <Button
+            title="Import Data"
+            onPress={handleImportData}
+            icon="upload"
+            variant="secondary"
+            style={{marginBottom: spacing.md}}
+          />
+        </View>
+
+        <View style={styles.section}>
           <Button
             title="Save Settings"
             onPress={handleSaveSettings}
+            icon="content-save"
             style={{marginBottom: spacing.md}}
           />
           
           <Button
             title="Clear All Data"
             onPress={handleClearData}
+            icon="delete-forever"
             variant="danger"
           />
         </View>

@@ -6,7 +6,9 @@ import {
   ActivityIndicator,
   ViewStyle,
   TextStyle,
+  View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors, spacing, typography} from '../utils/theme';
 
 interface ButtonProps {
@@ -15,6 +17,7 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'danger';
   disabled?: boolean;
   loading?: boolean;
+  icon?: string;
   style?: ViewStyle;
   textStyle?: TextStyle;
 }
@@ -25,6 +28,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   disabled = false,
   loading = false,
+  icon,
   style,
   textStyle,
 }) => {
@@ -53,7 +57,17 @@ export const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <ActivityIndicator color={colors.surface} />
       ) : (
-        <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+        <View style={styles.content}>
+          {icon && (
+            <Icon
+              name={icon}
+              size={20}
+              color={colors.surface}
+              style={styles.icon}
+            />
+          )}
+          <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+        </View>
       )}
     </TouchableOpacity>
   );
@@ -67,6 +81,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 50,
+  },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon: {
+    marginRight: spacing.xs,
   },
   buttonText: {
     ...typography.body,

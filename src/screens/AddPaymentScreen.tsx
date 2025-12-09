@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {colors, spacing, typography} from '../utils/theme';
 import {InputField} from '../components/InputField';
+import {DatePicker} from '../components/DatePicker';
 import {Button} from '../components/Button';
 import {Category, Payment} from '../types';
 import {loadCategories, loadPayments, savePayments, loadSettings} from '../services/storage';
@@ -20,7 +21,7 @@ export const AddPaymentScreen = ({navigation}: any) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [dueDate, setDueDate] = useState(new Date());
   const [notes, setNotes] = useState('');
   const [notificationEnabled, setNotificationEnabled] = useState(true);
   const [notificationDays, setNotificationDays] = useState('3');
@@ -52,10 +53,6 @@ export const AddPaymentScreen = ({navigation}: any) => {
       Alert.alert('Error', 'Please enter a valid amount');
       return false;
     }
-    if (!dueDate) {
-      Alert.alert('Error', 'Please enter a due date (YYYY-MM-DD)');
-      return false;
-    }
     return true;
   };
 
@@ -77,7 +74,7 @@ export const AddPaymentScreen = ({navigation}: any) => {
         id: generateId(),
         title: title.trim(),
         amount: parseFloat(amount),
-        dueDate: new Date(dueDate),
+        dueDate: dueDate,
         categoryId: selectedCategoryId,
         status: 'pending',
         isRecurring,
@@ -148,11 +145,10 @@ export const AddPaymentScreen = ({navigation}: any) => {
           placeholder="0.00"
         />
 
-        <InputField
-          label="Due Date (YYYY-MM-DD)"
+        <DatePicker
+          label="Due Date"
           value={dueDate}
-          onChangeText={setDueDate}
-          placeholder="2024-12-31"
+          onChange={setDueDate}
         />
 
         <InputField
