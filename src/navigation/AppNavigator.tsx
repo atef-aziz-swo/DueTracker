@@ -8,8 +8,11 @@ import {colors} from '../utils/theme';
 // Screens
 import {DashboardScreen} from '../screens/DashboardScreen';
 import {AddPaymentScreen} from '../screens/AddPaymentScreen';
+import {PaymentDetailScreen} from '../screens/PaymentDetailScreen';
+import {AllPaymentsScreen} from '../screens/AllPaymentsScreen';
 import {ReportsScreen} from '../screens/ReportsScreen';
 import {SettingsScreen} from '../screens/SettingsScreen';
+import {CategoriesScreen} from '../screens/CategoriesScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -59,6 +62,21 @@ export function AppNavigator() {
           name="AddPayment"
           component={AddPaymentScreen}
           options={{title: 'Add Payment', presentation: 'modal'}}
+        />
+        <Stack.Screen
+          name="PaymentDetail"
+          component={PaymentDetailScreen}
+          options={{title: 'Payment Details'}}
+        />
+        <Stack.Screen
+          name="AllPayments"
+          component={AllPaymentsScreen}
+          options={{title: 'All Payments'}}
+        />
+        <Stack.Screen
+          name="Categories"
+          component={CategoriesScreen}
+          options={{title: 'Manage Categories'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
