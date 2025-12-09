@@ -85,8 +85,9 @@ export const SettingsScreen = ({navigation}: any) => {
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.json';
-      input.onchange = async (e: any) => {
-        const file = e.target?.files?.[0];
+      input.onchange = async (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        const file = target.files?.[0];
         if (file) {
           try {
             const reader = new FileReader();

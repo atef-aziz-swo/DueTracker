@@ -27,17 +27,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   const [showPicker, setShowPicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(value);
 
+  const today = new Date();
   const quickDates = [
-    {label: 'Today', days: 0},
-    {label: 'Tomorrow', days: 1},
-    {label: 'Next Week', days: 7},
-    {label: 'Next Month', days: 30},
+    {label: 'Today', days: 0, date: today},
+    {label: 'Tomorrow', days: 1, date: addDays(today, 1)},
+    {label: 'Next Week', days: 7, date: addDays(today, 7)},
+    {label: 'Next Month', days: 30, date: addDays(today, 30)},
   ];
 
-  const handleQuickDate = (days: number) => {
-    const newDate = addDays(new Date(), days);
-    setSelectedDate(newDate);
-    onChange(newDate);
+  const handleQuickDate = (date: Date) => {
+    setSelectedDate(date);
+    onChange(date);
     setShowPicker(false);
   };
 
@@ -77,15 +77,15 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             <View style={styles.quickDatesContainer}>
               <Text style={styles.sectionLabel}>Quick Select</Text>
               <View style={styles.quickDatesGrid}>
-                {quickDates.map(({label, days}) => (
+                {quickDates.map(({label, date}) => (
                   <TouchableOpacity
                     key={label}
                     style={styles.quickDateButton}
-                    onPress={() => handleQuickDate(days)}
+                    onPress={() => handleQuickDate(date)}
                     activeOpacity={0.7}>
                     <Text style={styles.quickDateText}>{label}</Text>
                     <Text style={styles.quickDateSubtext}>
-                      {format(addDays(new Date(), days), 'MMM dd')}
+                      {format(date, 'MMM dd')}
                     </Text>
                   </TouchableOpacity>
                 ))}

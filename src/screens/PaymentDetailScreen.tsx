@@ -58,6 +58,14 @@ export const PaymentDetailScreen = ({route, navigation}: any) => {
     setCategories(cats);
   };
 
+  const updatePaymentStatus = async (paymentId: string, status: 'paid' | 'pending' | 'overdue') => {
+    const payments = await loadPayments();
+    const updatedPayments = payments.map(p =>
+      p.id === paymentId ? {...p, status} : p
+    );
+    await savePayments(updatedPayments);
+  };
+
   const handleMarkAsPaid = async () => {
     if (!payment) return;
 
@@ -70,11 +78,7 @@ export const PaymentDetailScreen = ({route, navigation}: any) => {
           text: 'Mark as Paid',
           onPress: async () => {
             try {
-              const payments = await loadPayments();
-              const updatedPayments = payments.map(p =>
-                p.id === payment.id ? {...p, status: 'paid' as const} : p
-              );
-              await savePayments(updatedPayments);
+              await updatePaymentStatus(payment.id, 'paid');
               Alert.alert('Success', 'Payment marked as paid', [
                 {text: 'OK', onPress: () => navigation.goBack()},
               ]);

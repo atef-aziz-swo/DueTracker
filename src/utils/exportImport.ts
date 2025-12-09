@@ -45,6 +45,11 @@ export const importData = async (jsonString: string): Promise<void> => {
       throw new Error('Invalid data format');
     }
 
+    // Validate that payments and categories are arrays
+    if (!Array.isArray(data.payments) || !Array.isArray(data.categories)) {
+      throw new Error('Invalid data format: payments and categories must be arrays');
+    }
+
     // Convert date strings back to Date objects
     const payments: Payment[] = data.payments.map(p => ({
       ...p,
