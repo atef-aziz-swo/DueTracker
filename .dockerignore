@@ -1,0 +1,12 @@
+# Docker deployment files
+dist/
+node_modules/
+.git/
+.github/
+*.md
+!README.md
+.gitignore
+.eslintrc.js
+.prettierrc
+tsconfig.json
+jest.config.js
