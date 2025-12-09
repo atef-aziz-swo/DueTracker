@@ -9,11 +9,16 @@ A feature-rich React Native mobile application for tracking payment dues, managi
 ### Core Features
 - ✅ **Payment Tracking**: Track all your payment dues with detailed information
 - ✅ **Categories**: Organize payments into customizable categories with color coding
+- ✅ **Category Management**: Add, edit, and delete custom categories with visual color selection
+- ✅ **Search & Filter**: Powerful search and filtering to find payments quickly
+- ✅ **Payment Details**: View and edit payment details with a comprehensive detail screen
 - ✅ **Smart Notifications**: Automated reminders before payment due dates
+- ✅ **Date Picker**: Native-style date picker for easy due date selection
 - ✅ **Recurring Payments**: Support for recurring payment scheduling
 - ✅ **Payment Status**: Track pending, overdue, and paid payments
 - ✅ **Offline First**: All data stored locally using AsyncStorage/localStorage
 - ✅ **Reports & Analytics**: Visual statistics and insights into your payments
+- ✅ **Export/Import**: Backup and restore data with JSON export/import
 - ✅ **Templates**: Save payment templates for quick entry
 
 ### Mobile Optimizations
@@ -198,3 +203,17 @@ The app works out of the box with sensible defaults. For production deployments,
 ## Credits
 
 Inspired by [payment-dues-notifier](https://github.com/mayoit/payment-dues-notifier) by mayoit.
+
+## Recent Improvements
+
+### December 2024 Update
+Major feature additions and UI improvements:
+- ✅ **Payment Detail Screen** - View and edit payment details
+- ✅ **Search & Filter** - Find payments quickly with advanced search
+- ✅ **Category Management** - Manage categories with visual color picker
+- ✅ **Export/Import** - Backup and restore data
+- ✅ **Date Picker** - Native-style date selection
+- ✅ **Enhanced UI** - Icons, better layouts, improved user experience
+
+See [FEATURES.md](FEATURES.md) for detailed documentation of all features.
+See [SUGGESTIONS.md](SUGGESTIONS.md) for future improvement suggestions.
